@@ -37,8 +37,9 @@ int main(int argc, char** argv) {
             execution += std::to_string(current_time) + ", " + std::to_string(duration_intr) + ", CPU burst\n"; //add to execution
             current_time+=duration_intr; //increment current time by duration of CPU execution
         }else{ //else its a interupt/systemcall
-            auto [interrupt_execution, current_time] = intr_boilerplate(current_time, duration_intr, context_save_time, vectors);
+            auto [interrupt_execution, updated_time] = intr_boilerplate(current_time, duration_intr, context_save_time, vectors);
             execution += interrupt_execution; //append
+            current_time = updated_time;
             execution += std::to_string(current_time) + ", " + std::to_string(ISR_time) + ", " + activity + ": run the ISR (device driver)\n";
             if(activity == "SYSCALL"){
                 execution += std::to_string(current_time) + ", " + std::to_string(delays.at(duration_intr)) + ", check for errors\n"; //for system call 
