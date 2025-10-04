@@ -21,18 +21,24 @@ int main(int argc, char** argv) {
     std::string execution;  //!< string to accumulate the execution output
 
     /******************ADD YOUR VARIABLES HERE*************************/
-    int testvar = 0; //test
-
+    int current_time = 0; //ms
+    int context_save_time = 10; //ms
+    std::string interrupt_execution;
 
     /******************************************************************/
 
     //parse each line of the input trace file
     while(std::getline(input_file, trace)) {
-        auto [activity, duration_intr] = parse_trace(trace);
+        auto [activity, duration_intr] = parse_trace(trace); //split the trace file into activity column and duration column
 
         /******************ADD YOUR SIMULATION CODE HERE*************************/
-
-
+        if(activity == "CPU"){ //if CPU
+            execution += current_time + ", " + duration_intr + ", CPU burst\n"; //add to execution
+            current_time+=duration_intr; //increment current time by duration of CPU execution
+        }else{ //else its a interupt/systemcall
+            [interrupt_execution, current_time] = intr_boilerplate(current_time, duration_intr, context_save_time, activity);
+            execution += interrupt_execution; //append
+        }
 
         /************************************************************************/
 

@@ -105,27 +105,31 @@ std::pair<std::string, int> intr_boilerplate(int current_time, int intr_num, int
 
     std::string execution = "";
 
+    //Switch to kernel mode
     execution += std::to_string(current_time) + ", " + std::to_string(1) + ", switch to kernel mode\n";
     current_time++;
 
+    //Save context
     execution += std::to_string(current_time) + ", " + std::to_string(context_save_time) + ", context saved\n";
     current_time += context_save_time;
     
-    char vector_address_c[10];
-    sprintf(vector_address_c, "0x%04X", (ADDR_BASE + (intr_num * VECTOR_SIZE)));
+    //Get vector address
+    char vector_address_c[10]; 
+    sprintf(vector_address_c, "0x%04X", (ADDR_BASE + (intr_num * VECTOR_SIZE)));  
     std::string vector_address(vector_address_c);
 
     execution += std::to_string(current_time) + ", " + std::to_string(1) + ", find vector " + std::to_string(intr_num) 
                     + " in memory position " + vector_address + "\n";
     current_time++;
 
+    //Load address to PC
     execution += std::to_string(current_time) + ", " + std::to_string(1) + ", load address " + vectors.at(intr_num) + " into the PC\n";
     current_time++;
 
-    return std::make_pair(execution, current_time);
+    return std::make_pair(execution, current_time); //output new current time and the process of interupt
 }
 
-
+//create and overwrite the output file
 void write_output(std::string execution) {
     std::ofstream output_file("execution.txt");
 
