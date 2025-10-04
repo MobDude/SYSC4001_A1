@@ -34,16 +34,16 @@ int main(int argc, char** argv) {
 
         /******************ADD YOUR SIMULATION CODE HERE*************************/  //if sysc call - check for errors, if int - check device status
         if(activity == "CPU"){ //if CPU
-            execution += std::to_string(current_time) + ", " + duration_intr + ", CPU burst\n"; //add to execution
+            execution += std::to_string(current_time) + ", " + std::to_string(duration_intr) + ", CPU burst\n"; //add to execution
             current_time+=duration_intr; //increment current time by duration of CPU execution
         }else{ //else its a interupt/systemcall
             auto [interrupt_execution, current_time] = intr_boilerplate(current_time, duration_intr, context_save_time, vectors);
             execution += interrupt_execution; //append
             execution += std::to_string(current_time) + ", " + std::to_string(ISR_time) + ", " + activity + ": run the ISR (device driver)\n";
             if(activity == "SYSCALL"){
-                execution += std::to_string(current_time) + ", " + delays.at(duration_intr) + ", check for errors\n"; //for system call 
+                execution += std::to_string(current_time) + ", " + std::to_string(delays.at(duration_intr)) + ", check for errors\n"; //for system call 
             }else{
-                execution += std::to_string(current_time) + ", " + delays.at(duration_intr) + ", check device status\n"; //for harware device
+                execution += std::to_string(current_time) + ", " + std::to_string(delays.at(duration_intr)) + ", check device status\n"; //for harware device
             }
             execution += current_time + ", " + std::to_string(1) + ", IRET\n";
         }
