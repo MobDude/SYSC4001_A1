@@ -46,7 +46,8 @@ int main(int argc, char** argv) {
             }else{
                 execution += std::to_string(current_time) + ", " + std::to_string(delays.at(duration_intr)) + ", check device status\n"; //for harware device
             }
-            execution += current_time + ", " + std::to_string(1) + ", IRET\n";
+            execution += std::to_string(current_time) + ", " + std::to_string(1) + ", IRET\n";
+            current_time+= 1;
         }
 
         /************************************************************************/
