@@ -36,8 +36,10 @@ int main(int argc, char** argv) {
             execution += current_time + ", " + duration_intr + ", CPU burst\n"; //add to execution
             current_time+=duration_intr; //increment current time by duration of CPU execution
         }else{ //else its a interupt/systemcall
-            [interrupt_execution, current_time] = intr_boilerplate(current_time, duration_intr, context_save_time, activity);
+            [interrupt_execution, current_time] = intr_boilerplate(current_time, duration_intr, context_save_time, vectors);
             execution += interrupt_execution; //append
+            execution += current_time + ", " + delays.at(duration_intr) + ", call ISR\n"
+            execution += current_time + ", " + std::to_string(1) + ", IRET\n"
         }
 
         /************************************************************************/
