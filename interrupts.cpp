@@ -39,13 +39,13 @@ int main(int argc, char** argv) {
         }else{ //else its a interupt/systemcall
             [interrupt_execution, current_time] = intr_boilerplate(current_time, duration_intr, context_save_time, vectors);
             execution += interrupt_execution; //append
-            execution += std::to_string(current_time) + ", " + std::to_string(ISR_time) + ", " + activity + ": run the ISR (device driver)\n"
+            execution += std::to_string(current_time) + ", " + std::to_string(ISR_time) + ", " + activity + ": run the ISR (device driver)\n";
             if(activity == "SYSCALL"){
-                execution += std::to_string(current_time) + ", " + delays.at(duration_intr) + ", check for errors\n" //for system call 
+                execution += std::to_string(current_time) + ", " + delays.at(duration_intr) + ", check for errors\n"; //for system call 
             }else{
-                execution += std::to_string(current_time) + ", " + delays.at(duration_intr) + ", check device status\n" //for harware device
+                execution += std::to_string(current_time) + ", " + delays.at(duration_intr) + ", check device status\n"; //for harware device
             }
-            execution += current_time + ", " + std::to_string(1) + ", IRET\n"
+            execution += current_time + ", " + std::to_string(1) + ", IRET\n";
         }
 
         /************************************************************************/
