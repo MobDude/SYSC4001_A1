@@ -23,6 +23,7 @@ int main(int argc, char** argv) {
     /******************ADD YOUR VARIABLES HERE*************************/
     int current_time = 0; //ms
     int context_save_time = 10; //ms
+    int ISR_time = 40;
     std::string interrupt_execution;
 
     /******************************************************************/
@@ -31,14 +32,19 @@ int main(int argc, char** argv) {
     while(std::getline(input_file, trace)) {
         auto [activity, duration_intr] = parse_trace(trace); //split the trace file into activity column and duration column
 
-        /******************ADD YOUR SIMULATION CODE HERE*************************/
+        /******************ADD YOUR SIMULATION CODE HERE*************************/  //if sysc call - check for errors, if int - check device status
         if(activity == "CPU"){ //if CPU
-            execution += current_time + ", " + duration_intr + ", CPU burst\n"; //add to execution
+            execution += std::to_string(current_time) + ", " + duration_intr + ", CPU burst\n"; //add to execution
             current_time+=duration_intr; //increment current time by duration of CPU execution
         }else{ //else its a interupt/systemcall
             [interrupt_execution, current_time] = intr_boilerplate(current_time, duration_intr, context_save_time, vectors);
             execution += interrupt_execution; //append
-            execution += current_time + ", " + delays.at(duration_intr) + ", call ISR\n"
+            execution += std::to_string(current_time) + ", " + std::to_string(ISR_time) + ", " + activity + ": run the ISR (device driver)\n"
+            if(activity == "SYSCALL"){
+                execution += std::to_string(current_time) + ", " + delays.at(duration_intr) + ", check for errors\n" //for system call 
+            }else{
+                execution += std::to_string(current_time) + ", " + delays.at(duration_intr) + ", check device status\n" //for harware device
+            }
             execution += current_time + ", " + std::to_string(1) + ", IRET\n"
         }
 
