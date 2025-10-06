@@ -45,9 +45,9 @@ int main(int argc, char** argv) {
             if(activity == "SYSCALL"){ //for system call 
                 execution += std::to_string(current_time) + ", " + std::to_string(ISR_time) + ", transfer data from device to memory\n";
                 current_time += ISR_time; //increment timer by 40
-                execution += std::to_string(current_time) + ", " + std::to_string(delays.at(duration_intr)) + ", check for errors\n"; 
+                execution += std::to_string(current_time) + ", " + std::to_string(delays.at(duration_intr - 1)) + ", check for errors\n"; 
             }else{ //for harware device
-                execution += std::to_string(current_time) + ", " + std::to_string(delays.at(duration_intr)) + ", check device status\n"; 
+                execution += std::to_string(current_time) + ", " + std::to_string(delays.at(duration_intr - 1)) + ", check device status\n"; 
             }
             current_time += delays.at(duration_intr - 1);
             execution += std::to_string(current_time) + ", " + std::to_string(1) + ", IRET\n";
