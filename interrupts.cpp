@@ -22,8 +22,8 @@ int main(int argc, char** argv) {
 
     /******************ADD YOUR VARIABLES HERE*************************/
     int current_time = 0; //ms
-    int context_save_time = 20; //ms
-    int ISR_time = 40;
+    int context_save_time = 10; //ms
+    int ISR_time = 40; //ms
     std::string interrupt_execution;
 
     /******************************************************************/
